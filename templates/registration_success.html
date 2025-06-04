@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center animate__animated animate__zoomIn">
+      <img src="https://via.placeholder.com/100x100?text= ✅" alt="Успех" class="mb-4">
+      <h2 class="mb-4">Вы зарегистрированы!</h2>
+      <p class="lead mb-4">Проверьте свою почту — мы отправили вам приветственное письмо.</p>
+
+      <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Перейти к входу</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

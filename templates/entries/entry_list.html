@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Мои записи</h2>
+
+<a href="{% url 'entry_create' %}" class="btn btn-success mb-3">Добавить запись</a>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <form method="get" class="input-group">
+      <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Поиск...">
+      <button class="btn btn-outline-secondary" type="submit">🔍</button>
+    </form>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-12">
+    {% for tag in tags %}
+      <a href="?tag={{ tag.slug }}" class="btn btn-sm btn-outline-primary {% if current_tag == tag.slug %}active{% endif %}">
+        {{ tag.name }}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  {% for entry in object_list %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100">
+      {% if entry.image %}
+        <img src="{{ entry.image.url }}" class="card-img-top" alt="Изображение">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ entry.title }}</h5>
+        <p class="card-text">{{ entry.content|truncatechars:100 }}</p>
+        <a href="{% url 'entry_detail' entry.pk %}" class="btn btn-primary">Подробнее</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <div class="col-md-12">
+      <p>У вас пока нет записей.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Пагинация -->
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&tag={{ current_tag }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+
+    {% for i in paginator.page_range %}
+      <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}&q={{ query }}&tag={{ current_tag }}">{{ i }}</a>
+      </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&tag={{ current_tag }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

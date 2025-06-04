@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block content %}
+<div class="card mb-4">
+  <div class="card-body">
+    ...
+    {% if perms.entries.change_entry %}
+      <a href="{% url 'entry_update' entry.pk %}" class="btn btn-warning me-2">Редактировать</a>
+    {% endif %}
+
+    {% if perms.entries.delete_entry %}
+      <a href="{% url 'entry_delete' entry.pk %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
