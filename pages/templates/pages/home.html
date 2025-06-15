@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="text-center py-5 my-4">
+  <div class="container">
+    <h1 class="display-4 fw-bold text-primary animate__animated animate__fadeInDown" style="animation-delay: 0.3s">MyDiary</h1>
+    <p class="lead text-muted mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+      Веди личный дневник онлайн — сохраняй мысли, идеи и воспоминания.
+    </p>
+
+    {% if user.is_authenticated %}
+      <div class="d-flex justify-content-center gap-3 animate__animated animate__zoomIn" style="animation-delay: 0.9s">
+        <a href="{% url 'entry_list' %}" class="btn btn-primary btn-lg px-4">Мои записи</a>
+        <a href="{% url 'entry_create' %}" class="btn btn-success btn-lg px-4">Новая запись</a>
+      </div>
+    {% else %}
+      <div class="d-flex justify-content-center gap-3 animate__animated animate__zoomIn" style="animation-delay: 0.9s">
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4">Войти</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg px-4">Зарегистрироваться</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+          <h4>🔒 Приватность</h4>
+          <p>Писать можно только тебе — или делиться с другими.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+          <h4>📷 Изображения</h4>
+          <p>Добавляй фото к своим записям — хранение в медиафайлах.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+          <h4>🔖 Теги и поиск</h4>
+          <p>Фильтруй по тегам, находи нужные записи быстро.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 text-white bg-gradient" style="background: linear-gradient(to right, #00c9ff, #92fe9d);">
+  <div class="container text-center">
+    <h2 class="mb-3">Начни писать уже сегодня!</h2>
+    <p class="mb-4">Каждая мысль достойна быть записанной.</p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'entry_create' %}" class="btn btn-dark btn-lg px-5">Создать первую запись</a>
+    {% else %}
+      <a href="{% url 'register' %}" class="btn btn-dark btn-lg px-5">Зарегистрироваться</a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.bg-gradient {
+  background: linear-gradient(to right, #00c9ff, #92fe9d);
+}
+</style>
+
+{% endblock %}
